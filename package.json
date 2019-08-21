@@ -1,0 +1,31 @@
+{
+  "name": "js-dmw",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src -d out",
+    "eslint": "eslint src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Doni Setiawan <donisetiawan.050@gmail.com>",
+  "license": "MIT",
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    },
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+      "no-plusplus": "error",
+      "no-console": "off"
+    }
+  },
+  "devDependencies": {
+    "eslint": "^6.2.1",
+    "eslint-config-recommended": "^4.0.0"
+  }
+}
