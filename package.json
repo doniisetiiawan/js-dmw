@@ -4,28 +4,48 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src -d out",
+    "flow": "flow",
     "eslint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Doni Setiawan <donisetiawan.050@gmail.com>",
   "license": "MIT",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-flow"
+    ]
+  },
   "eslintConfig": {
     "parserOptions": {
       "ecmaVersion": 2017,
       "sourceType": "module"
     },
+    "parser": "babel-eslint",
     "env": {
       "browser": true,
       "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+      "eslint:recommended",
+      "plugin:flowtype/recommended"
+    ],
+    "plugins": [
+      "flowtype"
+    ],
     "rules": {
-      "no-plusplus": "error",
       "no-console": "off"
     }
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-flow": "^7.0.0",
+    "babel-eslint": "^10.0.2",
     "eslint": "^6.2.1",
-    "eslint-config-recommended": "^4.0.0"
+    "eslint-config-recommended": "^4.0.0",
+    "eslint-plugin-flowtype": "^4.2.0",
+    "flow-bin": "^0.105.2"
   }
 }
