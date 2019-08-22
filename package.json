@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src -d out",
+    "addTypes": "flow-typed install",
     "flow": "flow",
     "eslint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -46,6 +47,11 @@
     "eslint": "^6.2.1",
     "eslint-config-recommended": "^4.0.0",
     "eslint-plugin-flowtype": "^4.2.0",
-    "flow-bin": "^0.105.2"
+    "flow-bin": "^0.105.2",
+    "flow-typed": "^2.6.1"
+  },
+  "dependencies": {
+    "fetch": "^1.1.0",
+    "moment": "^2.24.0"
   }
 }
