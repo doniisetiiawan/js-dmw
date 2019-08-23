@@ -1,6 +1,6 @@
 /* @flow */
 
-import myCounter from "./module_counter.1.js";
+import myCounter from "./module_counter.2";
 
 /*
     Initialize the counter appropriately
