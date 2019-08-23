@@ -5,6 +5,8 @@
   "scripts": {
     "build": "flow-remove-types src/ -d out/",
     "buildWithMaps": "flow-remove-types src/ -d out/ --pretty --sourcemaps",
+    "start": "yarn run build && node out/doroundmath.js",
+    "nodemon": "nodemon --watch src --delay 1 --exec yarn start",
     "addTypes": "flow-typed install",
     "flow": "flow",
     "eslint": "eslint src",
@@ -50,7 +52,8 @@
     "eslint-plugin-flowtype": "^4.2.0",
     "flow-bin": "^0.105.2",
     "flow-remove-types": "^2.106.0",
-    "flow-typed": "^2.6.1"
+    "flow-typed": "^2.6.1",
+    "nodemon": "^1.19.1"
   },
   "dependencies": {
     "axios": "^0.19.0",
