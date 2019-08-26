@@ -2,25 +2,72 @@
 "use strict";
 
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const app = express();
 const bodyParser = require("body-parser");
+const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("../swagger.json");
 
 const dbConn = require("./restful_db.js");
+const validateUser = require("./validate_user.js");
 
-app.get("/", (req, res) => res.send("Secure server!"));
+const SECRET_JWT_KEY = "modernJSbook";
 
-/*
-    Add here the logic for CORS
-const cors = require("cors");
 app.use(cors());
-*/
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-/*
-    Add here the logic for providing a JWT at /gettoken
-    and the logic for validating a JWT, as shown earlier
-*/
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.get("/", (req, res) =>
+  res
+    .status(200)
+    .set("Connection", "close")
+    .send("Ready")
+);
+
+app.post("/gettoken", (req, res) => {
+  validateUser(req.body.user, req.body.password, (idErr, userid) => {
+    res.set("Connection", "close");
+
+    if (idErr !== null) {
+      res.status(401).send(idErr);
+    } else {
+      jwt.sign(
+        { userid },
+        SECRET_JWT_KEY,
+        { algorithm: "HS256", expiresIn: "1h" },
+        (err, token) => res.status(200).send(token)
+      );
+    }
+  });
+});
+
+app.use((req, res, next) => {
+  res.set("Connection", "close");
+
+  // First check for the Authorization header
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer")) {
+    return res.status(401).send("No token specified");
+  }
+
+  // Now validate the token itself
+  const token = authHeader.split(" ")[1];
+
+  jwt.verify(token, SECRET_JWT_KEY, (err, decoded) => {
+    if (err) {
+      // Token bad formed, or expired, or other problem
+      return res.status(403).send("Token expired or not valid");
+    } else {
+      // Token OK; get the user id from it
+      req.userid = decoded.userid;
+      // Keep processing the request
+      next();
+    }
+  });
+});
 
 const {
   getCountry,
@@ -129,17 +176,6 @@ app.use((err, req, res, next) => {
   res.status(500).send("INTERNAL SERVER ERROR");
 });
 
-/*
-    Add here the logic for HTTPS
-const https = require("https");
-const fs = require("fs");
-const path = require("path");
-const keysPath = path.join(__dirname, "../../certificates");
-const ca = fs.readFileSync(`${keysPath}/modernjsbook.csr`);
-const cert = fs.readFileSync(`${keysPath}/modernjsbook.crt`);
-const key = fs.readFileSync(`${keysPath}/modernjsbook.key`);
-https.createServer({ ca, cert, key }, app);
-*/
-app.listen(8080, () =>
-  console.log("Routing ready at http://localhost:8080")
+app.listen(8443, () =>
+  console.log("Server ready at http://localhost:8443")
 );
