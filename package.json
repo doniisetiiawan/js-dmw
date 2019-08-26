@@ -11,7 +11,7 @@
     "addTypes": "flow-typed install",
     "flow": "flow",
     "eslint": "eslint src",
-    "test": "jest out/"
+    "test": "jest out/ --coverage --no-cache"
   },
   "author": "Doni Setiawan <donisetiawan.050@gmail.com>",
   "license": "MIT",
