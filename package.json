@@ -5,7 +5,7 @@
   "scripts": {
     "build": "flow-remove-types src/ -d out/",
     "buildWithMaps": "flow-remove-types src/ -d out/ --pretty --sourcemaps",
-    "start": "yarn run build && node out/jwt_server.js",
+    "start": "yarn run build && node out/restful_server.js",
     "start-db": "yarn run build && node out/dbaccess.js",
     "nodemon": "nodemon --watch src --delay 1 --exec yarn start",
     "addTypes": "flow-typed install",
@@ -64,6 +64,7 @@
     "fetch": "^1.1.0",
     "helmet": "^3.20.0",
     "jsonwebtoken": "^8.5.1",
+    "mariasql": "^0.2.6",
     "moment": "^2.24.0"
   }
 }
